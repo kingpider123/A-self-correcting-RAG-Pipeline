@@ -1,1 +1,2 @@
 # A-self-correcting-RAG-Pipeline
+Description: a RAG system that doesn't just retrieve and answer. It first retrieves documents, has a second LLM ("a guardrail agent") review the retrieved context for relevance, and then has a third LLM generate the answer. Finally, it uses the fourth LLM (an "Evaluator Agent") to score the final answer against the source context for the factual consistency.
