@@ -10,25 +10,25 @@ This project implements an Agentic RAG State Machine that refuses to guess. Inst
 ## Architecture & Data Flow
 The pipeline is orchestrated using LangGraph, treating agents as nodes and routing logic as conditional edges:
 
-Retrieval Node: Embeds the user query and fetches semantic matches from a local ChromaDB vector store.
+1. **Retrieval Node**: Embeds the user query and fetches semantic matches from a local ChromaDB vector store.
 
-Guardrail Agent (Filter): A strict JSON-output agent that evaluates each retrieved document. It discards irrelevant chunks before they can pollute the generation context.
+2. **Guardrail Agent (Filter)**: A strict JSON-output agent that evaluates each retrieved document. It discards irrelevant chunks before they can pollute the generation context.
 
-Generator Agent: Drafts an initial answer using strictly the filtered context.
+3. **Generator Agent**: Drafts an initial answer using strictly the filtered context.
 
-Evaluator Agent (Hallucination Checker): Performs Natural Language Inference (NLI). It grades the drafted answer against the source documents.
+4. **Evaluator Agent (Hallucination Checker)**: Performs Natural Language Inference (NLI). It grades the drafted answer against the source documents.
 
-If True (Factual) ➡️ Delivers the answer to the user.
+        If True (Factual) ➡️ Delivers the answer to the user.
 
-If False (Hallucinated) ➡️ Routes back to the Generator with a feedback warning to try again.
+        If False (Hallucinated) ➡️ Routes back to the Generator with a feedback warning to try again.
 
 ## Tech Stack
-Orchestration: LangGraph (State Graphs, Conditional Edges)
+* **Orchestration**: LangGraph (State Graphs, Conditional Edges)
 
-LLM: Google Gemini 2.5 Flash (Optimized for low-latency JSON structured output)
+* **LLM**: Google Gemini 2.5 Flash (Optimized for low-latency JSON structured output)
 
-Vector Database: ChromaDB (Local SQLite-backed vector store)
+*  **Vector Database**: ChromaDB (Local SQLite-backed vector store)
 
-Embeddings: HuggingFace sentence-transformers (all-MiniLM-L6-v2)
+*  **Embeddings**: HuggingFace sentence-transformers (all-MiniLM-L6-v2)
 
-Language: Python 3.9+
+*  **Language**: Python 3.9+
